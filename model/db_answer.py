@@ -2,10 +2,13 @@
 
 class Tasks:
 
-    def __init__(self, test_id=None, name=None, setting_id=None):
+    def __init__(self, test_id=None, name=None, setting_id=None, description=None, ip_recipient=None, port_recipient=None):
         self.test_id = test_id
         self.name = name
         self.setting_id = setting_id
+        self.description = description
+        self.ip_recipient = ip_recipient
+        self.port_recipient = port_recipient
 
 
 class Settings:

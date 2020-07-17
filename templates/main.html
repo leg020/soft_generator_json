@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row">
+<div class="row my-sm-3">
   <div class="col-4">
     <div class="list-group" id="list-tab" role="tablist">
       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Home</a>
@@ -12,7 +12,51 @@
   </div>
   <div class="col-8">
     <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
+      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+
+
+
+        <div class="row my-sm-2">
+
+          <div class="col-12 my-sm-1">
+            <div class="card">
+              <div class="card-body">
+                This is some text within a card body.<br>
+                This is some text within a card body.<br>
+                This is some text within a card body.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 my-sm-1">
+            <button type="button" class="btn btn-outline-primary btn-sm btn-block">Редактировать</button>
+          </div>
+          <div class="col-4 my-sm-1">
+            <button type="button" class="btn btn-outline-primary btn-sm btn-block">Удалить</button>
+          </div>
+          <div class="col-4 my-sm-1">
+            <button type="button" class="btn btn-outline-primary btn-sm btn-block">Получить лог</button>
+          </div>
+
+          <div class="col-12 my-sm-1">
+            <button type="button" class="btn btn-outline-success btn-sm btn-block">Старт</button>
+          </div>
+
+          <div class="col-12 my-sm-1">
+            <div class="card">
+              <div class="card-body">
+                Результаты тестов.<br>
+                Результаты тестов.<br>
+                Результаты тестов.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
       <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
       <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
       <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>

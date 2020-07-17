@@ -31,12 +31,12 @@ class DataBase:
 
     def get_tests(self):
         answer = []
-        data = self.get_data_from_db('select task_id, name, setting_id from tasks')
+        data = self.get_data_from_db('select task_id, name, setting_id, description, ip_recipient, port_recipient from tasks')
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
-                (test_id, name, setting_id) = row
-                answer.append(Tasks(test_id=test_id, name=name, setting_id=setting_id))
+                (test_id, name, setting_id, description, ip_recipient, port_recipient) = row
+                answer.append(Tasks(test_id=test_id, name=name, setting_id=setting_id, description=description, ip_recipient=ip_recipient, port_recipient=port_recipient))
         else:
             answer.append(Tasks(name=check_result))
         return answer
