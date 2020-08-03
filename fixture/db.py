@@ -25,7 +25,7 @@ class DataBase:
 
     def check_data(self, data):
         if data.rowcount == 0:
-            return 'The table is empty'
+            return -1
         else:
             return 0
 
@@ -38,7 +38,7 @@ class DataBase:
                 (test_id, name, setting_id, description, ip_recipient, port_recipient) = row
                 answer.append(Tasks(test_id=test_id, name=name, setting_id=setting_id, description=description, ip_recipient=ip_recipient, port_recipient=port_recipient))
         else:
-            answer.append(Tasks(name=check_result))
+            answer = -1
         return answer
 
     def get_settings_by_id(self, id):

@@ -2,43 +2,74 @@
 {% block content %}
 
 <div class="row my-sm-3">
+
+  {% if data == -1 %}
+
+  <div class="col-12">
+    <h3> Отсутствуют тесты </h3>
+  </div>
+  {% else %}
+
   <div class="col-4">
     <div class="list-group" id="list-tab" role="tablist">
 
         {% for i in data %}
-            <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">{{i.name}}</a>
+            <a class="list-group-item list-group-item-action" id="list-home-list-{{ i.test_id }}" data-toggle="list" href="#list-home-{{ i.test_id }}" role="tab" aria-controls="home">{{i.name}}</a>
         {% endfor %}
 
     </div>
   </div>
+
+
   <div class="col-8">
     <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+      {% for i in data %}
 
-
+      <div class="tab-pane fade show" id="list-home-{{ i.test_id }}" role="tabpanel" aria-labelledby="list-home-list-{{ i.test_id }}">
 
         <div class="row my-sm-2">
+
+          <form id="start-test-{{ i.test_id }}" class="form_to_server" method="post" target="area">
+            <input type="hidden" name="operation" value="start">
+            <input type="hidden" name="data" value="{{ i.test_id }}">
+          </form>
+
+          <form id="get-log-test-{{ i.test_id }}" class="form_to_server" method="post" target="area">
+            <input type="hidden" name="operation" value="get_log">
+            <input type="hidden" name="data" value="{{ i.test_id }}">
+          </form>
+
+          <form id="delete-test-{{ i.test_id }}" class="form_to_server" method="post" target="area">
+            <input type="hidden" name="operation" value="delete">
+            <input type="hidden" name="data" value="{{ i.test_id }}">
+          </form>
+
+          <form id="edit-test-{{ i.test_id }}" class="form_to_server" method="post" target="area">
+            <input type="hidden" name="operation" value="edit">
+            <input type="hidden" name="data" value="{{ i.test_id }}">
+          </form>
 
           <div class="col-12 my-sm-1">
             <div class="card">
               <div class="card-body">
-                i.description
+
+                  {{ i.description }}
+
               </div>
             </div>
           </div>
 
           <div class="col-4 my-sm-1">
-            <button type="button" class="btn btn-outline-primary btn-sm btn-block">Редактировать</button>
+            <button type="submit" class="btn btn-outline-primary btn-sm btn-block" form="edit-test-{{ i.test_id }}">Редактировать</button>
           </div>
           <div class="col-4 my-sm-1">
-            <button type="button" class="btn btn-outline-primary btn-sm btn-block">Удалить</button>
+            <button type="submit" class="btn btn-outline-primary btn-sm btn-block" form="delete-test-{{ i.test_id }}">Удалить</button>
           </div>
           <div class="col-4 my-sm-1">
-            <button type="button" class="btn btn-outline-primary btn-sm btn-block">Получить лог</button>
+            <button type="submit" class="btn btn-outline-primary btn-sm btn-block" form="get-log-test-{{ i.test_id }}">Получить лог</button>
           </div>
-
           <div class="col-12 my-sm-1">
-            <button type="button" class="btn btn-outline-success btn-sm btn-block">Старт</button>
+            <button type="submit" class="btn btn-outline-success btn-sm btn-block" form="start-test-{{ i.test_id }}">Старт</button>
           </div>
 
           <div class="col-12 my-sm-1">
@@ -56,11 +87,14 @@
 
 
       </div>
-      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-      <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-      <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+
+      {% endfor %}
+
     </div>
   </div>
+
+  {% endif %}
+
 </div>
 
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, request
 from fixture.db import DataBase
 
 flask = Flask(__name__)
@@ -8,6 +8,19 @@ flask = Flask(__name__)
 def get_main_page():
     tests = get_data_for_main_page()
     return render_template('main.html', data=tests)
+
+
+@flask.route('/', methods=["POST"])
+def post_main_page():
+    if request.form['operation'] == 'start':
+        a = request.form['data']
+    elif request.form['operation'] == 'get_log':
+        a = request.form['data']
+    elif request.form['operation'] == 'delete':
+        a = request.form['data']
+    elif request.form['operation'] == 'edit':
+        a = request.form['data']
+    return redirect(url_for('get_main_page'))
 
 
 @flask.route('/new_test', methods=["GET"])
