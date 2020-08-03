@@ -2,12 +2,13 @@ from flask import Flask, render_template, redirect, url_for, request
 from fixture.db import DataBase
 
 flask = Flask(__name__)
+result = 'Приветики а вот и результаты'
 
 
 @flask.route('/', methods=["GET"])
 def get_main_page():
     tests = get_data_for_main_page()
-    return render_template('main.html', data=tests)
+    return render_template('main.html', data=tests, result=result)
 
 
 @flask.route('/', methods=["POST"])
