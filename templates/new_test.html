@@ -1,211 +1,227 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <form id="send_client" class="form to server" method="post" target="area">
-        <input type="hidden" name="post_id" value="send">
-        <input type="hidden" name="id" value="0">
 
-        <h3> Основные настройки </h3>
+<h3> Основные настройки </h3>
+
+<form id="new-test" class="form_to_server" method="post" target="area">
+
+    <input type="hidden" name="test_id" value="{{ test_info.test_id }}">
+
+    <div class="form-row">
+        <div class="input-group flex-nowrap my-sm-2 col-md-6">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="test_name">Название теста:</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Название теста" aria-label="Название теста" aria-describedby="addon-wrapping" name="test_name" value="{{ test_info.name }}">
+        </div>
+
+        <div class="input-group flex-nowrap my-sm-2 col-md-6">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="target">Путь к Frontol:</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Путь к Frontol" aria-label="Путь к Frontol" aria-describedby="addon-wrapping" name="target" value="{{ test_settings.target }}">
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="input-group flex-nowrap my-sm-2 col-md-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="ip_recipient">IP - Сервиса</span>
+            </div>
+            <input type="text" class="form-control" placeholder="IP" aria-label="IP" aria-describedby="addon-wrapping" name="ip_recipient" value="{{ test_info.ip_recipient }}">
+        </div>
+
+        <div class="input-group flex-nowrap my-sm-2 col-md-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="port_recipient">PORT - Сервиса</span>
+            </div>
+            <input type="text" class="form-control" placeholder="PORT" aria-label="PORT" aria-describedby="addon-wrapping" name="port_recipient" value="{{ test_info.port_recipient }}">
+        </div>
+
+        <div class="input-group flex-nowrap my-sm-2 col-md-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="scaner_port">COM - Сканера</span>
+            </div>
+            <input type="text" class="form-control" placeholder="COM" aria-label="COM" aria-describedby="addon-wrapping" name="scaner_port" value="{{ test_settings.scaner_port }}">
+        </div>
+
+        <div class="input-group flex-nowrap my-sm-2 col-md-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="scaner_boundrate">Скорость</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Скорость" aria-label="Скорость" aria-describedby="addon-wrapping" name="scaner_boundrate" value="{{ test_settings.scaner_boundrate }}">
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="input-group flex-nowrap my-sm-2 col-md-12">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="description">Описание</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Описание" aria-label="Описание" aria-describedby="addon-wrapping" name="description" value="{{ test_info.description }}">
+        </div>
+
+    </div>
+
+</form>
+
+<div class="form-row">
+    <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
+        {% if test_info.test_id == None %}
+        <button type="button" class="btn btn-outline-success"> Создать </button>
+        {% else %}
+        <button type="button" class="btn btn-outline-secondary"> Обновить </button>
+        {% endif %}
+    </div>
+</div>
+
+
+{% if test_info.test_id != None %}
+
+<h3> Документы </h3>
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Новый</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Старый</a>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <h5 class="card-title">Создать документ</h5>
 
         <div class="form-row">
             <div class="input-group flex-nowrap my-sm-2 col-md-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="test_name">Название теста:</span>
+                    <span class="input-group-text" id="check_number">Номер документа</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Название теста" aria-label="Название теста" aria-describedby="addon-wrapping" name="test_name" value="0">
+                <input type="text" class="form-control" placeholder="Номер документа" aria-label="Номер документа" aria-describedby="addon-wrapping" name="check_number" value="0">
             </div>
 
             <div class="input-group flex-nowrap my-sm-2 col-md-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="target">Путь к Frontol:</span>
+                    <span class="input-group-text" id="document_type_str">Тип документа</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Путь к Frontol" aria-label="Путь к Frontol" aria-describedby="addon-wrapping" name="target" value="0">
+
+                <div class="col">
+                    <label class="mr-sm-2 sr-only" for="document_type">Preference</label>
+                    <select class="custom-select mr-sm-2" id="document_type">
+                        <option selected>Не выбрано</option>
+                        <option value="registration">Регистрация документа</option>
+                        <option value="report">Печать отчета</option>
+                    </select>
+                </div>
             </div>
         </div>
 
         <div class="form-row">
-            <div class="input-group flex-nowrap my-sm-2 col-md-3">
+            <div class="input-group flex-nowrap my-sm-2 col-md-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="ip_recipient">IP - Сервиса</span>
+                    <span class="input-group-text" id="check_type_str">Тип открываемого чека</span>
                 </div>
-                <input type="text" class="form-control" placeholder="IP" aria-label="IP" aria-describedby="addon-wrapping" name="ip_recipient" value="0">
+
+                <div class="col">
+                    <label class="mr-sm-2 sr-only" for="check_type">Preference</label>
+                    <select class="custom-select mr-sm-2" id="check_type">
+                        <option selected>Не выбрано</option>
+                        <option value="1">Продажа</option>
+                        <option value="2">Возврат продажи</option>
+                        <option value="3">Внесение</option>
+                        <option value="4">Выплата</option>
+                        <option value="12">Расход</option>
+                        <option value="13">Возврат расхода</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="input-group flex-nowrap my-sm-2 col-md-3">
+            <div class="input-group flex-nowrap my-sm-2 col-md-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="port_recipient">PORT - Сервиса</span>
+                    <span class="input-group-text" id="report_type_str">Тип отчета</span>
                 </div>
-                <input type="text" class="form-control" placeholder="PORT" aria-label="PORT" aria-describedby="addon-wrapping" name="port_recipient" value="0">
+
+                <div class="col">
+                    <label class="mr-sm-2 sr-only" for="report_type">Preference</label>
+                    <select class="custom-select mr-sm-2" id="report_type">
+                        <option selected>Не выбрано</option>
+                        <option value="1">Открытие смены</option>
+                        <option value="7">Закрытие смены</option>
+
+                    </select>
+                </div>
             </div>
 
-            <div class="input-group flex-nowrap my-sm-2 col-md-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="scaner_port">COM - Сканера</span>
-                </div>
-                <input type="text" class="form-control" placeholder="COM" aria-label="COM" aria-describedby="addon-wrapping" name="scaner_port" value="0">
-            </div>
-
-            <div class="input-group flex-nowrap my-sm-2 col-md-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="scaner_boundrate">Скорость</span>
-                </div>
-                <input type="text" class="form-control" placeholder="Скорость" aria-label="Скорость" aria-describedby="addon-wrapping" name="scaner_boundrate" value="0">
-            </div>
         </div>
+
 
         <div class="form-row">
-            <div class="input-group flex-nowrap my-sm-2 col-md-12">
+            <div class="input-group flex-nowrap my-sm-2 col-md-5">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="description">Описание</span>
+                    <span class="input-group-text" id="help_setting_str">Тип возврата</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Описание" aria-label="Описание" aria-describedby="addon-wrapping" name="description" value="0">
+
+                <div class="col">
+                    <label class="mr-sm-2 sr-only" for="help_setting">Preference</label>
+                    <select class="custom-select mr-sm-2" id="help_setting">
+                        <option selected>Не выбрано</option>
+                        <option value="1">Пустой</option>
+                        <option value="2">На основании</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group flex-nowrap my-sm-2 col-md-5">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="type_close_str">Тип оплаты</span>
+                </div>
+
+                <div class="col">
+                    <label class="mr-sm-2 sr-only" for="type_close">Preference</label>
+                    <select class="custom-select mr-sm-2" id="type_close">
+                        <option selected>Не выбрано</option>
+                        <option value="1">Наличными</option>
+                        <option value="2">Безналичными</option>
+                        <option value="3">Предоплатой (Авансом)</option>
+                        <option value="4">Постоплатой (Кредитом)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group flex-nowrap my-sm-2 col-md-2">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="sale">
+                    <label class="custom-control-label" for="sale">Добавить скидку</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-row">
+
+            <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-success"> Добавить </button>
+                <button type="button" class="btn btn-outline-secondary"> Очистить </button>
             </div>
 
         </div>
 
-        <h3> Документы </h3>
-
-        <div class="card text-center">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Новый</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Старый</a>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="card-body">
-                <h5 class="card-title">Создать документ</h5>
-
-                <div class="form-row">
-                    <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="check_number">Номер документа</span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Номер документа" aria-label="Номер документа" aria-describedby="addon-wrapping" name="check_number" value="0">
-                    </div>
-
-                    <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="document_type_str">Тип документа</span>
-                        </div>
-
-                        <div class="col">
-                            <label class="mr-sm-2 sr-only" for="document_type">Preference</label>
-                            <select class="custom-select mr-sm-2" id="document_type">
-                                <option selected>Не выбрано</option>
-                                <option value="registration">Регистрация документа</option>
-                                <option value="report">Печать отчета</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="check_type_str">Тип открываемого чека</span>
-                        </div>
-
-                        <div class="col">
-                            <label class="mr-sm-2 sr-only" for="check_type">Preference</label>
-                            <select class="custom-select mr-sm-2" id="check_type">
-                                <option selected>Не выбрано</option>
-                                <option value="1">Продажа</option>
-                                <option value="2">Возврат продажи</option>
-                                <option value="3">Внесение</option>
-                                <option value="4">Выплата</option>
-                                <option value="12">Расход</option>
-                                <option value="13">Возврат расхода</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="report_type_str">Тип отчета</span>
-                        </div>
-
-                        <div class="col">
-                            <label class="mr-sm-2 sr-only" for="report_type">Preference</label>
-                            <select class="custom-select mr-sm-2" id="report_type">
-                                <option selected>Не выбрано</option>
-                                <option value="1">Открытие смены</option>
-                                <option value="7">Закрытие смены</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
 
 
-                <div class="form-row">
-                    <div class="input-group flex-nowrap my-sm-2 col-md-5">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="help_setting_str">Тип возврата</span>
-                        </div>
+    </div>
+</div>
 
-                        <div class="col">
-                            <label class="mr-sm-2 sr-only" for="help_setting">Preference</label>
-                            <select class="custom-select mr-sm-2" id="help_setting">
-                                <option selected>Не выбрано</option>
-                                <option value="1">Пустой</option>
-                                <option value="2">На основании</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-group flex-nowrap my-sm-2 col-md-5">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="type_close_str">Тип оплаты</span>
-                        </div>
-
-                        <div class="col">
-                            <label class="mr-sm-2 sr-only" for="type_close">Preference</label>
-                            <select class="custom-select mr-sm-2" id="type_close">
-                                <option selected>Не выбрано</option>
-                                <option value="1">Наличными</option>
-                                <option value="2">Безналичными</option>
-                                <option value="3">Предоплатой (Авансом)</option>
-                                <option value="4">Постоплатой (Кредитом)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-group flex-nowrap my-sm-2 col-md-2">
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input" id="sale">
-                            <label class="custom-control-label" for="sale">Добавить скидку</label>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="form-row">
-
-                    <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-outline-success"> Добавить </button>
-                        <button type="button" class="btn btn-outline-secondary"> Очистить </button>
-                    </div>
-
-                </div>
-
-
-
-            </div>
-        </div>
-
-    </form>
-
+{% endif %}
 
 
 {% endblock %}

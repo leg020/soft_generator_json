@@ -41,6 +41,18 @@ class DataBase:
             answer = -1
         return answer
 
+    def get_test_by_id(self, id):
+        answer = []
+        data = self.get_data_from_db('select task_id, name, setting_id, description, ip_recipient, port_recipient from tasks where task_id=%s' % id)
+        check_result = self.check_data(data)
+        if check_result == 0:
+            for row in data:
+                (test_id, name, setting_id, description, ip_recipient, port_recipient) = row
+                answer.append(Tasks(test_id=test_id, name=name, setting_id=setting_id, description=description, ip_recipient=ip_recipient, port_recipient=port_recipient))
+        else:
+            answer = -1
+        return answer
+
     def get_settings_by_id(self, id):
         answer = []
         data = self.get_data_from_db('select setting_id, target, scaner_port, scaner_boundrate, have_kassa from settings where setting_id=%s' % id)
@@ -54,7 +66,7 @@ class DataBase:
                                        scaner_boundrate=scaner_boundrate,
                                        have_cassa=have_cassa))
         else:
-            answer.append(Settings(target=check_result))
+            answer = -1
         return answer
 
     def get_documents_by_test_id(self, test_id):
