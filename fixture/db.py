@@ -120,3 +120,4 @@ class DataBase:
     def insert_in_to_tests(self, tasks: Tasks()):
         self.get_data_from_db("insert into tasks(name, setting_id, description, ip_recipient, port_recipient) VALUES('%s', %d, '%s', '%s', %d)" % (tasks.name, tasks.setting_id, tasks.description, tasks.ip_recipient, tasks.port_recipient))
         return self.get_tests()[-1].test_id
+
