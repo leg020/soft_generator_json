@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session
 import os
 from fixture.db import DataBase
 from model.db_answer import Tasks, Settings
+from model.model_builder import ModelBuilder
 
 flask = Flask(__name__)
 flask.secret_key = os.urandom(24)
@@ -34,8 +35,8 @@ def post_main_page():
 @flask.route('/edit_test', methods=["GET"])
 def get_edit_test_page():
     db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
-    test_info = db.get_test_by_id(id=session['edit_data'])[0]
-    test_settings = db.get_settings_by_id(id=test_info.setting_id)[0]
+    test_info = db.get_tests(id=session['edit_data'])[0]
+    test_settings = db.get_settings(id=test_info.setting_id)[0]
     return get_new_test_page(test_info, test_settings)
 
 @flask.route('/new_test', methods=["GET"])
@@ -50,6 +51,22 @@ def get_data_for_main_page():
     db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
     data = db.get_tests()
     return data
+
+@flask.route('/new_test', methods=["POST"])
+def add_new_test_settings():
+    model_builder = ModelBuilder()
+    settings = model_builder.convert_in_settings(form=request.form)
+    db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
+    setting_id = db.insert_in_to_settings(settings)
+    tests = model_builder.convert_in_tasks(form=request.form, setting_id=setting_id)
+    test_id = db.insert_in_to_tests(tests)
+    session['edit_data'] = test_id
+    return redirect(url_for('get_edit_test_page'))
+
+@flask.route('/edit_test', methods=["POST"])
+def edit_test_settings():
+    pass
+
 
 
 

@@ -4,7 +4,8 @@
 
 <h3> Основные настройки </h3>
 
-<form id="new-test" class="form_to_server" method="post" target="area">
+<form id="new_test" class="form_to_server" method="post" target="area">
+
 
     <input type="hidden" name="test_id" value="{{ test_info.test_id }}">
 
@@ -71,9 +72,9 @@
 <div class="form-row">
     <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
         {% if test_info.test_id == None %}
-        <button type="button" class="btn btn-outline-success"> Создать </button>
+        <button type="submit" class="btn btn-outline-success" form="new_test"> Создать </button>
         {% else %}
-        <button type="button" class="btn btn-outline-secondary"> Обновить </button>
+        <button type="submit" class="btn btn-outline-secondary" form="new_test"> Обновить </button>
         {% endif %}
     </div>
 </div>

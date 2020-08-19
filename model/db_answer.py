@@ -17,7 +17,7 @@ class Settings:
                  target=None,
                  scaner_port=None,
                  scaner_boundrate=None,
-                 have_cassa=None):
+                 have_cassa=True):
         self.setting_id = setting_id
         self.target = target
         self.scaner_port = scaner_port

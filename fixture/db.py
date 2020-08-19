@@ -29,9 +29,12 @@ class DataBase:
         else:
             return 0
 
-    def get_tests(self):
+    def get_tests(self, id=None):
         answer = []
-        data = self.get_data_from_db('select task_id, name, setting_id, description, ip_recipient, port_recipient from tasks')
+        if id == None:
+            data = self.get_data_from_db('select task_id, name, setting_id, description, ip_recipient, port_recipient from tasks')
+        else:
+            data = self.get_data_from_db('select task_id, name, setting_id, description, ip_recipient, port_recipient from tasks where task_id=%s' % id)
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
@@ -41,21 +44,12 @@ class DataBase:
             answer = -1
         return answer
 
-    def get_test_by_id(self, id):
+    def get_settings(self, id=None):
         answer = []
-        data = self.get_data_from_db('select task_id, name, setting_id, description, ip_recipient, port_recipient from tasks where task_id=%s' % id)
-        check_result = self.check_data(data)
-        if check_result == 0:
-            for row in data:
-                (test_id, name, setting_id, description, ip_recipient, port_recipient) = row
-                answer.append(Tasks(test_id=test_id, name=name, setting_id=setting_id, description=description, ip_recipient=ip_recipient, port_recipient=port_recipient))
+        if id == None:
+            data = self.get_data_from_db('select setting_id, target, scaner_port, scaner_boundrate, have_kassa from settings')
         else:
-            answer = -1
-        return answer
-
-    def get_settings_by_id(self, id):
-        answer = []
-        data = self.get_data_from_db('select setting_id, target, scaner_port, scaner_boundrate, have_kassa from settings where setting_id=%s' % id)
+            data = self.get_data_from_db('select setting_id, target, scaner_port, scaner_boundrate, have_kassa from settings where setting_id=%s' % id)
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
@@ -68,6 +62,7 @@ class DataBase:
         else:
             answer = -1
         return answer
+
 
     def get_documents_by_test_id(self, test_id):
         answer = []
@@ -117,3 +112,11 @@ class DataBase:
         else:
             answer.append(Documents(document_type=check_result))
         return answer
+
+    def insert_in_to_settings(self, settings: Settings()):
+        self.get_data_from_db("insert into settings(target, scaner_port, scaner_boundrate) VALUES('%s', '%s', %d)" % (settings.target, settings.scaner_port, settings.scaner_boundrate))
+        return self.get_settings()[-1].setting_id
+
+    def insert_in_to_tests(self, tasks: Tasks()):
+        self.get_data_from_db("insert into tasks(name, setting_id, description, ip_recipient, port_recipient) VALUES('%s', %d, '%s', '%s', %d)" % (tasks.name, tasks.setting_id, tasks.description, tasks.ip_recipient, tasks.port_recipient))
+        return self.get_tests()[-1].test_id
