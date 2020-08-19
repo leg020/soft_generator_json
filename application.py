@@ -65,8 +65,14 @@ def add_new_test_settings():
 
 @flask.route('/edit_test', methods=["POST"])
 def edit_test_settings():
-    pass
-
+    model_builder = ModelBuilder()
+    settings = model_builder.convert_in_settings(form=request.form)
+    tests = model_builder.convert_in_tasks(form=request.form)
+    db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
+    setting_id = db.update_settins_by_id(settings)
+    test_id = db.update_tests_by_id(tests)
+    session['edit_data'] = test_id
+    return redirect(url_for('get_edit_test_page'))
 
 
 

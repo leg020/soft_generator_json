@@ -66,7 +66,7 @@ class DataBase:
 
     def get_documents_by_test_id(self, test_id):
         answer = []
-        data = self.get_data_from_db('select document_id, check_number, document_type, report_type, check_type, help_setting, type_close, sale, test_id from documents where test_id=%s' % test_id)
+        data = self.get_data_from_db('select document_id, check_number, document_type, report_type, check_type, help_setting, type_close, sale, test_id from documents where task_id=%s' % test_id)
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
@@ -103,7 +103,7 @@ class DataBase:
 
     def get_logs_by_test_id(self, test_id):
         answer = []
-        data = self.get_data_from_db('select log_id, data, test_id, date_time from logs where test_id=%s' % test_id)
+        data = self.get_data_from_db('select log_id, data, test_id, date_time from logs where task_id=%s' % test_id)
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
@@ -121,3 +121,10 @@ class DataBase:
         self.get_data_from_db("insert into tasks(name, setting_id, description, ip_recipient, port_recipient) VALUES('%s', %d, '%s', '%s', %d)" % (tasks.name, tasks.setting_id, tasks.description, tasks.ip_recipient, tasks.port_recipient))
         return self.get_tests()[-1].test_id
 
+    def update_settins_by_id(self, settings: Settings()):
+        self.get_data_from_db("UPDATE settings SET target='%s', scaner_port='%s', scaner_boundrate=%d where setting_id=%d" % (settings.target, settings.scaner_port, settings.scaner_boundrate, settings.setting_id))
+        return settings.setting_id
+
+    def update_tests_by_id(self, tasks: Tasks()):
+        self.get_data_from_db("UPDATE tasks SET name='%s', setting_id=%d, description='%s', ip_recipient='%s', port_recipient=%d where task_id=%d" % (tasks.name, tasks.setting_id, tasks.description, tasks.ip_recipient, tasks.port_recipient, tasks.test_id))
+        return tasks.test_id
