@@ -64,9 +64,14 @@ class DataBase:
         return answer
 
 
-    def get_documents_by_test_id(self, test_id):
+    def get_documents(self, test_id=None, document_id=None):
         answer = []
-        data = self.get_data_from_db('select document_id, check_number, document_type, report_type, check_type, help_setting, type_close, sale, test_id from documents where task_id=%s' % test_id)
+        if test_id != None:
+            data = self.get_data_from_db('select document_id, check_number, document_type, report_type, check_type, help_setting, type_close, sale, test_id from documents where test_id=%s' % test_id)
+        elif document_id != None:
+            data = self.get_data_from_db('select document_id, check_number, document_type, report_type, check_type, help_setting, type_close, sale, test_id from documents where document_id=%s' % document_id)
+        else:
+            data = self.get_data_from_db('select document_id, check_number, document_type, report_type, check_type, help_setting, type_close, sale, test_id from documents')
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
@@ -80,8 +85,6 @@ class DataBase:
                                         type_close=type_close,
                                         sale=sale,
                                         test_id=test_id))
-        else:
-            answer.append(Documents(document_type=check_result))
         return answer
 
     def get_positions_by_document_id(self, document_id):

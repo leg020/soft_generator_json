@@ -90,15 +90,41 @@
         <ul class="nav nav-tabs card-header-tabs">
 
             <li class="nav-item">
-                <a class="nav-link active" href="#">Новый</a>
+
+                {% if doc == {} %}
+
+                <a class="nav-link active" href="edit_test-new">Новый</a>
+
+                {% else %}
+
+                <a class="nav-link" href="edit_test-new">Новый</a>
+
+                {% endif %}
+
             </li>
 
+            {% for i in documents %}
+
             <li class="nav-item">
-                <a class="nav-link" href="#">Старый</a>
+
+                {% if doc.document_id == i.document_id %}
+
+                <a class="nav-link active" href="edit_test-{{ i.document_id }}">Документ {{ i.check_number }}</a>
+
+                {% else %}
+
+                <a class="nav-link" href="edit_test-{{ i.document_id }}">Документ {{ i.check_number }}</a>
+
+                {% endif %}
+
             </li>
+
+            {% endfor %}
 
         </ul>
     </div>
+
+
 
     <div class="card-body">
         <h5 class="card-title">Создать документ</h5>
@@ -108,7 +134,9 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="check_number">Номер документа</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Номер документа" aria-label="Номер документа" aria-describedby="addon-wrapping" name="check_number" value="0">
+
+                <input type="text" class="form-control" placeholder="Номер документа" aria-label="Номер документа" aria-describedby="addon-wrapping" name="check_number" value="{{ doc.check_number }}">
+
             </div>
 
             <div class="input-group flex-nowrap my-sm-2 col-md-6">
@@ -213,7 +241,8 @@
 
             <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-outline-success"> Добавить </button>
-                <button type="button" class="btn btn-outline-secondary"> Очистить </button>
+                <button type="button" class="btn btn-outline-secondary"> Обновить </button>
+                <button type="button" class="btn btn-outline-danger"> Очистить </button>
             </div>
 
         </div>
