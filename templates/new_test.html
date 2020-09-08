@@ -72,7 +72,7 @@
 
 <div class="form-row">
     <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
-        {% if test_info.test_id == None %}
+        {% if test_info == {} %}
         <button type="submit" class="btn btn-outline-success" form="new_test"> Создать </button>
         {% else %}
         <button type="submit" class="btn btn-outline-secondary" form="new_test"> Обновить </button>
@@ -81,7 +81,7 @@
 </div>
 
 
-{% if test_info.test_id != None %}
+{% if test_info != {} %}
 
 <h3> Документы </h3>
 
@@ -93,11 +93,11 @@
 
                 {% if doc == {} %}
 
-                <a class="nav-link active" href="edit_test-new">Новый</a>
+                <a class="nav-link active" href="test_redactor_new">Новый</a>
 
                 {% else %}
 
-                <a class="nav-link" href="edit_test-new">Новый</a>
+                <a class="nav-link" href="test_redactor_new">Новый</a>
 
                 {% endif %}
 
@@ -109,11 +109,11 @@
 
                 {% if doc.document_id == i.document_id %}
 
-                <a class="nav-link active" href="edit_test-{{ i.document_id }}">Документ {{ i.check_number }}</a>
+                <a class="nav-link active" href="test_redactor_{{ i.document_id }}">Документ {{ i.check_number }}</a>
 
                 {% else %}
 
-                <a class="nav-link" href="edit_test-{{ i.document_id }}">Документ {{ i.check_number }}</a>
+                <a class="nav-link" href="test_redactor_{{ i.document_id }}">Документ {{ i.check_number }}</a>
 
                 {% endif %}
 
@@ -240,9 +240,18 @@
         <div class="form-row">
 
             <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
+
+                {% if doc == {} %}
+
                 <button type="button" class="btn btn-outline-success"> Добавить </button>
+
+                {% else %}
+
                 <button type="button" class="btn btn-outline-secondary"> Обновить </button>
-                <button type="button" class="btn btn-outline-danger"> Очистить </button>
+
+                {% endif %}
+
+                <button type="button" class="btn btn-outline-danger"> Удалить </button>
             </div>
 
         </div>

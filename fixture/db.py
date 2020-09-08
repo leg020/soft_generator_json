@@ -40,8 +40,6 @@ class DataBase:
             for row in data:
                 (test_id, name, setting_id, description, ip_recipient, port_recipient) = row
                 answer.append(Tasks(test_id=test_id, name=name, setting_id=setting_id, description=description, ip_recipient=ip_recipient, port_recipient=port_recipient))
-        else:
-            answer = -1
         return answer
 
     def get_settings(self, id=None):
@@ -59,8 +57,6 @@ class DataBase:
                                        scaner_port=scaner_port,
                                        scaner_boundrate=scaner_boundrate,
                                        have_cassa=have_cassa))
-        else:
-            answer = -1
         return answer
 
 

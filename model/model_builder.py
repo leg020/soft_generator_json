@@ -13,7 +13,7 @@ class ModelBuilder:
         tests = Tasks()
         if test_id != None:
             tests.test_id = int(test_id)
-        elif form['test_id'] != None and form['test_id'] != 'None':
+        elif form['test_id'] != None and form['test_id'] != 'None' and form['test_id'] != '':
             tests.test_id = int(form['test_id'])
         if name != None:
             tests.name = name
@@ -45,7 +45,7 @@ class ModelBuilder:
         settings = Settings()
         if setting_id != None:
             settings.setting_id = setting_id
-        elif form['setting_id'] != None and form['setting_id'] != 'None':
+        elif form['setting_id'] != None and form['setting_id'] != 'None' and form['setting_id'] != '':
             settings.setting_id = int(form['setting_id'])
         if target != None:
             settings.target = target
