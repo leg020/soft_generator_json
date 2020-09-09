@@ -88,37 +88,22 @@
 <div class="card text-center">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
-
             <li class="nav-item">
-
                 {% if doc == {} %}
-
                 <a class="nav-link active" href="test_redactor_new">Новый</a>
-
                 {% else %}
-
                 <a class="nav-link" href="test_redactor_new">Новый</a>
-
                 {% endif %}
-
             </li>
 
             {% for i in documents %}
-
             <li class="nav-item">
-
                 {% if doc.document_id == i.document_id %}
-
                 <a class="nav-link active" href="test_redactor_{{ i.document_id }}">Документ {{ i.check_number }}</a>
-
                 {% else %}
-
                 <a class="nav-link" href="test_redactor_{{ i.document_id }}">Документ {{ i.check_number }}</a>
-
                 {% endif %}
-
             </li>
-
             {% endfor %}
 
         </ul>
@@ -140,55 +125,18 @@
             </div>
 
             <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="document_type_str">Тип документа</span>
-                </div>
-
-                <div class="col">
-                    <label class="mr-sm-2 sr-only" for="document_type">Preference</label>
-                    <select class="custom-select mr-sm-2" id="document_type">
-                        <option selected>Не выбрано</option>
-                        <option value="registration">Регистрация документа</option>
-                        <option value="report">Печать отчета</option>
-                    </select>
-                </div>
+                {% include 'elements/document_type.html' %}
             </div>
         </div>
 
         <div class="form-row">
-            <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="check_type_str">Тип открываемого чека</span>
-                </div>
 
-                <div class="col">
-                    <label class="mr-sm-2 sr-only" for="check_type">Preference</label>
-                    <select class="custom-select mr-sm-2" id="check_type">
-                        <option selected>Не выбрано</option>
-                        <option value="1">Продажа</option>
-                        <option value="2">Возврат продажи</option>
-                        <option value="3">Внесение</option>
-                        <option value="4">Выплата</option>
-                        <option value="12">Расход</option>
-                        <option value="13">Возврат расхода</option>
-                    </select>
-                </div>
+            <div class="input-group flex-nowrap my-sm-2 col-md-6">
+                {% include 'elements/check_type.html' %}
             </div>
 
             <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="report_type_str">Тип отчета</span>
-                </div>
-
-                <div class="col">
-                    <label class="mr-sm-2 sr-only" for="report_type">Preference</label>
-                    <select class="custom-select mr-sm-2" id="report_type">
-                        <option selected>Не выбрано</option>
-                        <option value="1">Открытие смены</option>
-                        <option value="7">Закрытие смены</option>
-
-                    </select>
-                </div>
+                {% include 'elements/report_type.html' %}
             </div>
 
         </div>
@@ -196,35 +144,11 @@
 
         <div class="form-row">
             <div class="input-group flex-nowrap my-sm-2 col-md-5">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="help_setting_str">Тип возврата</span>
-                </div>
-
-                <div class="col">
-                    <label class="mr-sm-2 sr-only" for="help_setting">Preference</label>
-                    <select class="custom-select mr-sm-2" id="help_setting">
-                        <option selected>Не выбрано</option>
-                        <option value="1">Пустой</option>
-                        <option value="2">На основании</option>
-                    </select>
-                </div>
+                {% include 'elements/help_setting.html' %}
             </div>
 
             <div class="input-group flex-nowrap my-sm-2 col-md-5">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="type_close_str">Тип оплаты</span>
-                </div>
-
-                <div class="col">
-                    <label class="mr-sm-2 sr-only" for="type_close">Preference</label>
-                    <select class="custom-select mr-sm-2" id="type_close">
-                        <option selected>Не выбрано</option>
-                        <option value="1">Наличными</option>
-                        <option value="2">Безналичными</option>
-                        <option value="3">Предоплатой (Авансом)</option>
-                        <option value="4">Постоплатой (Кредитом)</option>
-                    </select>
-                </div>
+                {% include 'elements/type_close.html' %}
             </div>
 
             <div class="input-group flex-nowrap my-sm-2 col-md-2">

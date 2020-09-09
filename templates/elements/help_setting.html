@@ -1,0 +1,27 @@
+<div class="input-group-prepend">
+    <span class="input-group-text" id="help_setting_str">Тип возврата</span>
+</div>
+
+<div class="col">
+    <label class="mr-sm-2 sr-only" for="help_setting">Preference</label>
+    <select class="custom-select mr-sm-2" id="help_setting">
+
+        {% if doc.help_setting == 1 %}
+
+        <option selected value="1">Пустой</option>
+        <option value="2">На основании</option>
+
+        {% elif doc.help_setting == 2 %}
+
+        <option value="1">Пустой</option>
+        <option selected value="2">На основании</option>
+
+        {% else %}
+
+        <option selected>Не выбрано</option>
+        <option value="1">Пустой</option>
+        <option value="2">На основании</option>
+
+        {% endif %}
+    </select>
+</div>

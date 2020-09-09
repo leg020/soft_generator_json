@@ -1,0 +1,27 @@
+<div class="input-group-prepend">
+    <span class="input-group-text" id="document_type_str">Тип документа</span>
+</div>
+
+<div class="col">
+    <label class="mr-sm-2 sr-only" for="document_type">Preference</label>
+    <select class="custom-select mr-sm-2" id="document_type">
+
+        {% if doc.document_type == 'registration' %}
+
+        <option selected value="registration">Регистрация документа</option>
+        <option value="report">Печать отчета</option>
+
+        {% elif doc.document_type == 'report' %}
+
+        <option value="registration">Регистрация документа</option>
+        <option selected value="report">Печать отчета</option>
+
+        {% else %}
+
+        <option selected>Не выбрано</option>
+        <option value="registration">Регистрация документа</option>
+        <option value="report">Печать отчета</option>
+
+        {% endif %}
+    </select>
+</div>
