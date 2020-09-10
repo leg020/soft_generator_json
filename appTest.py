@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, session
 import os
 from fixture.db import DataBase
-from model.db_answer import Tasks, Settings, Documents
+from model.db_answer import Tasks, Settings, Documents, Positions
 from model.model_builder import ModelBuilder
 
 
@@ -52,7 +52,13 @@ def new_test_page(test_id=None, document_id=None):
             doc = doc[0]
     else:
         doc = {}
-    return render_template('new_test.html', test_info=test_info, test_settings=test_settings, documents=documents, doc=doc)
+
+    positions=[
+        Positions(position_id=1, place_in_list=2, count=2, need_mark=1, mark='ttttttttt', document_id=1),
+        Positions(position_id=2, place_in_list=5, count=60, need_mark=0, mark='rrrrrrrrr', document_id=1),
+    ]
+
+    return render_template('new_test.html', test_info=test_info, test_settings=test_settings, documents=documents, doc=doc, positions=positions)
 
 
 @flask.route('/new_test_page', methods=['GET'])

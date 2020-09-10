@@ -121,7 +121,6 @@
                 </div>
 
                 <input type="text" class="form-control" placeholder="Номер документа" aria-label="Номер документа" aria-describedby="addon-wrapping" name="check_number" value="{{ doc.check_number }}">
-
             </div>
 
             <div class="input-group flex-nowrap my-sm-2 col-md-6">
@@ -138,9 +137,7 @@
             <div class="input-group flex-nowrap my-sm-2 col-md-6">
                 {% include 'elements/report_type.html' %}
             </div>
-
         </div>
-
 
         <div class="form-row">
             <div class="input-group flex-nowrap my-sm-2 col-md-5">
@@ -157,10 +154,18 @@
         </div>
 
 
+        <div class="form-row">
+
+            <div class="container-fluid my-sm-2 col-md-12">
+                <h6 class="card-title">Добавить позиции</h6>
+                {% include 'elements/positions.html' %}
+            </div>
+        </div>
+
 
         <div class="form-row">
 
-            <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
+            <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Control documents">
 
                 {% if doc == {} %}
 
@@ -169,12 +174,11 @@
                 {% else %}
 
                 <button type="button" class="btn btn-outline-secondary"> Обновить </button>
+                <button type="button" class="btn btn-outline-danger"> Удалить </button>
 
                 {% endif %}
 
-                <button type="button" class="btn btn-outline-danger"> Удалить </button>
             </div>
-
         </div>
 
 

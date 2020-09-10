@@ -1,0 +1,72 @@
+<div id="accordion">
+
+    {% for i in positions %}
+
+    <div class="card">
+        <div class="card-header" id="heading{{i.position_id}}">
+            <h5 class="mb-0">
+                <button class="btn btn btn-outline-secondary" data-toggle="collapse" data-target="#collapse{{i.position_id}}" aria-expanded="true" aria-controls="collapse{{i.position_id}}">
+                    Позиция {{ i.position_id }}
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapse{{i.position_id}}" class="collapse" aria-labelledby="heading{{i.position_id}}" data-parent="#accordion">
+            <div class="card-body">
+
+                <div class="form-row">
+
+                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="place_in_list">Номер в справочнике</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" aria-label="Номер в справочнике" aria-describedby="addon-wrapping" name="place_in_list" value="{{ i.place_in_list }}">
+                    </div>
+
+                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="count">Количество товара</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" aria-label="Количество товара" aria-describedby="addon-wrapping" name="count" value="{{ i.count }}">
+                    </div>
+
+                    <div class="custom-control custom-checkbox my-sm-2 mr-sm-4">
+
+                        {% if i.need_mark == 1 %}
+                        <input checked type="checkbox" class="custom-control-input" id="need_mark_true">
+                        <label class="custom-control-label" for="need_mark_true">Добавить марку</label>
+                        {% else %}
+                        <input type="checkbox" class="custom-control-input" id="need_mark_false">
+                        <label class="custom-control-label" for="need_mark_false">Добавить марку</label>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="input-group flex-nowrap my-sm-2 col-md-12">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="mark">Марка</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Введите марку" aria-label="Марка" aria-describedby="addon-wrapping" name="mark" value="{{ i.mark }}">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
+
+                        <button type="button" class="btn btn-outline-primary"> Обновить позицию </button>
+                        <button type="button" class="btn btn-outline-primary"> Удалить позицию </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
