@@ -53,7 +53,7 @@ def new_test_page(test_id=None, document_id=None):
     else:
         doc = {}
 
-    positions=[
+    positions = [
         Positions(position_id=1, place_in_list=2, count=2, need_mark=1, mark='ttttttttt', document_id=1),
         Positions(position_id=2, place_in_list=5, count=60, need_mark=0, mark='rrrrrrrrr', document_id=1),
     ]
@@ -93,6 +93,7 @@ def get_edit_page(document_id):
 @flask.route('/test_redactor_<document_id>', methods=["POST"])
 def post_edit_page(document_id):
     model_builder = ModelBuilder()
+    a = request.form
     settings = model_builder.convert_in_settings(form=request.form)
     tests = model_builder.convert_in_tasks(form=request.form)
     db = DataBase(host='127.0.0.1', name='tests', user='root', password='')

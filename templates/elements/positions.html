@@ -1,18 +1,82 @@
 <div id="accordion">
 
+    <div class="card">
+        <div class="card-header" id="heading_new_position">
+            <h5 class="mb-0">
+                <button class="btn btn btn-outline-secondary" data-toggle="collapse" data-target="#collapse_new_position" aria-expanded="true" aria-controls="collapse_new_position">
+                    Создать новую позицию
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapse_new_position" class="collapse show" aria-labelledby="heading_new_position" data-parent="#accordion">
+            <div class="card-body">
+
+                <h5 class="card-title">Создать новую позицию в документе</h5>
+
+                <div class="form-row">
+
+                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="new_place_in_list">Номер в справочнике</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Введите" aria-label="Номер в справочнике" aria-describedby="addon-wrapping" name="new_place_in_list" value="">
+                    </div>
+
+                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="new_count">Количество товара</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Введите" aria-label="Количество товара" aria-describedby="addon-wrapping" name="new_count" value="">
+                    </div>
+
+                    <div class="custom-control custom-checkbox my-sm-2 mr-sm-4">
+
+                        <input type="checkbox" class="custom-control-input" id="new_need_mark_false">
+                        <label class="custom-control-label" for="new_need_mark_false">Добавить марку</label>
+
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="input-group flex-nowrap my-sm-2 col-md-12">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="new_mark">Марка</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Введите марку" aria-label="Марка" aria-describedby="addon-wrapping" name="new_mark" value="">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
+
+                        <button type="button" class="btn btn-outline-primary"> Создать позицию </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     {% for i in positions %}
 
     <div class="card">
         <div class="card-header" id="heading{{i.position_id}}">
             <h5 class="mb-0">
                 <button class="btn btn btn-outline-secondary" data-toggle="collapse" data-target="#collapse{{i.position_id}}" aria-expanded="true" aria-controls="collapse{{i.position_id}}">
-                    Позиция {{ i.position_id }}
+                    Изменить позицию {{ i.position_id }}
                 </button>
             </h5>
         </div>
 
         <div id="collapse{{i.position_id}}" class="collapse" aria-labelledby="heading{{i.position_id}}" data-parent="#accordion">
             <div class="card-body">
+
+                <h5 class="card-title">Изменить позицию в документе</h5>
 
                 <div class="form-row">
 
