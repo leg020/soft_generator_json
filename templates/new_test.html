@@ -116,44 +116,46 @@
 
         <form id="document" class="form_to_server" method="post" target="area">
 
-        <div class="form-row">
-            <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="check_number">Номер документа</span>
+            <input type="hidden" name="test_id" value="{{ test_info.test_id }}">
+
+            <div class="form-row">
+                <div class="input-group flex-nowrap my-sm-2 col-md-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="check_number">Номер документа</span>
+                    </div>
+
+                    <input type="text" class="form-control" placeholder="Номер документа" aria-label="Номер документа" aria-describedby="addon-wrapping" name="check_number" value="{{ doc.check_number }}">
                 </div>
 
-                <input type="text" class="form-control" placeholder="Номер документа" aria-label="Номер документа" aria-describedby="addon-wrapping" name="check_number" value="{{ doc.check_number }}">
+                <div class="input-group flex-nowrap my-sm-2 col-md-6">
+                    {% include 'elements/document_type.html' %}
+                </div>
             </div>
 
-            <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                {% include 'elements/document_type.html' %}
-            </div>
-        </div>
+            <div class="form-row">
 
-        <div class="form-row">
+                <div class="input-group flex-nowrap my-sm-2 col-md-6">
+                    {% include 'elements/check_type.html' %}
+                </div>
 
-            <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                {% include 'elements/check_type.html' %}
-            </div>
-
-            <div class="input-group flex-nowrap my-sm-2 col-md-6">
-                {% include 'elements/report_type.html' %}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="input-group flex-nowrap my-sm-2 col-md-5">
-                {% include 'elements/help_setting.html' %}
+                <div class="input-group flex-nowrap my-sm-2 col-md-6">
+                    {% include 'elements/report_type.html' %}
+                </div>
             </div>
 
-            <div class="input-group flex-nowrap my-sm-2 col-md-5">
-                {% include 'elements/type_close.html' %}
-            </div>
+            <div class="form-row">
+                <div class="input-group flex-nowrap my-sm-2 col-md-5">
+                    {% include 'elements/help_setting.html' %}
+                </div>
 
-            <div class="input-group flex-nowrap my-sm-2 col-md-2">
-                {% include 'elements/sale.html' %}
+                <div class="input-group flex-nowrap my-sm-2 col-md-5">
+                    {% include 'elements/type_close.html' %}
+                </div>
+
+                <div class="input-group flex-nowrap my-sm-2 col-md-2">
+                    {% include 'elements/sale.html' %}
+                </div>
             </div>
-        </div>
 
         </form>
 
@@ -163,7 +165,7 @@
 
                 {% if doc == {} %}
 
-                <button type="button" name="document_operation" value="add" form="document" class="btn btn-outline-success"> Добавить </button>
+                <button type="submit" name="document_operation" value="add" form="document" class="btn btn-outline-success"> Добавить </button>
 
                 {% else %}
 

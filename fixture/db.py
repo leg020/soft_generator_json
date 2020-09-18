@@ -120,6 +120,17 @@ class DataBase:
         self.get_data_from_db("insert into tasks(name, setting_id, description, ip_recipient, port_recipient) VALUES('%s', %d, '%s', '%s', %d)" % (tasks.name, tasks.setting_id, tasks.description, tasks.ip_recipient, tasks.port_recipient))
         return self.get_tests()[-1].test_id
 
+    def insert_in_to_documents(self, documents: Documents()):
+        self.get_data_from_db("insert into documents(check_number, document_type, report_type, check_type, help_setting, type_close, sale, test_id) VALUES(%d, '%s', %d, %d, %d, %d, %d, %d)" % (documents.check_number,
+                                                                                                                                                                                             documents.document_type,
+                                                                                                                                                                                             documents.report_type,
+                                                                                                                                                                                             documents.check_type,
+                                                                                                                                                                                             documents.help_setting,
+                                                                                                                                                                                             documents.type_close,
+                                                                                                                                                                                             documents.sale,
+                                                                                                                                                                                             documents.test_id))
+        return self.get_documents()[-1].document_id
+
     def update_settins_by_id(self, settings: Settings()):
         self.get_data_from_db("UPDATE settings SET target='%s', scaner_port='%s', scaner_boundrate=%d where setting_id=%d" % (settings.target, settings.scaner_port, settings.scaner_boundrate, settings.setting_id))
         return settings.setting_id
@@ -127,3 +138,15 @@ class DataBase:
     def update_tests_by_id(self, tasks: Tasks()):
         self.get_data_from_db("UPDATE tasks SET name='%s', setting_id=%d, description='%s', ip_recipient='%s', port_recipient=%d where task_id=%d" % (tasks.name, tasks.setting_id, tasks.description, tasks.ip_recipient, tasks.port_recipient, tasks.test_id))
         return tasks.test_id
+
+    def update_documents_by_id(self, document: Documents()):
+        self.get_data_from_db("UPDATE documents SET check_number=%d, document_type='%s', report_type=%d, check_type=%d, help_setting=%d, type_close=%d, sale=%d where document_id=%d" % (document.check_number,
+                                                                                                                                                                                         document.document_type,
+                                                                                                                                                                                         document.report_type,
+                                                                                                                                                                                         document.check_type,
+                                                                                                                                                                                         document.help_setting,
+                                                                                                                                                                                         document.type_close,
+                                                                                                                                                                                         document.sale,
+                                                                                                                                                                                         document.document_id))
+        return document.document_id
+

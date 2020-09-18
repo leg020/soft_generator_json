@@ -68,11 +68,11 @@ def get_new_test_page():
 
 @flask.route('/new_test_page', methods=['POST'])
 def post_new_test_page():
-    model_builder = ModelBuilder()
-    settings = model_builder.convert_in_settings(form=request.form)
+    model_builder = ModelBuilder(form=request.form)
+    settings = model_builder.convert_in_settings()
     db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
     setting_id = db.insert_in_to_settings(settings)
-    tests = model_builder.convert_in_tasks(form=request.form, setting_id=setting_id)
+    tests = model_builder.convert_in_tasks(setting_id=setting_id)
     test_id = db.insert_in_to_tests(tests)
     session['test_id'] = test_id
     return redirect(url_for('get_edit_page', document_id='new'))
@@ -85,6 +85,7 @@ def get_edit_page(document_id):
     except:
         return redirect(url_for('get_main_page'))
 
+
     if document_id == 'new':
         document_id = None
     return new_test_page(test_id=test_id, document_id=document_id)
@@ -92,15 +93,28 @@ def get_edit_page(document_id):
 
 @flask.route('/test_redactor_<document_id>', methods=["POST"])
 def post_edit_page(document_id):
-    model_builder = ModelBuilder()
-    a = request.form
-    settings = model_builder.convert_in_settings(form=request.form)
-    tests = model_builder.convert_in_tasks(form=request.form)
     db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
-    setting_id = db.update_settins_by_id(settings)
-    test_id = db.update_tests_by_id(tests)
-    session['test_id'] = test_id
+    model_builder = ModelBuilder(form=request.form)
+    if request.form['document_operation'] == 'edit_settings':
+        settings = model_builder.convert_in_settings()
+        tests = model_builder.convert_in_tasks()
+        setting_id = db.update_settins_by_id(settings)
+        session['test_id'] = db.update_tests_by_id(tests)
+
+    if request.form['document_operation'] == 'add':
+        document = model_builder.convert_in_documents()
+        document_id = db.insert_in_to_documents(documents=document)
+
+    if request.form['document_operation'] == 'edit':
+        document_id = document_id
+        document = model_builder.convert_in_documents(document_id=document_id)
+        document_id = db.update_documents_by_id(document=document)
+
+    if request.form['document_operation'] == 'delete':
+        pass
+
     return redirect(url_for('get_edit_page', document_id=document_id))
+
 
 
 
