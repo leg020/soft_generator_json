@@ -150,7 +150,6 @@ class ModelBuilder:
         else:
             position.count = int(self.form['count'])
 
-
         if need_mark != None:
             position.need_mark = need_mark
         elif self.form['document_operation'] == 'add_position':
@@ -163,7 +162,6 @@ class ModelBuilder:
                 position.need_mark = int(self.form['need_mark'])
             except:
                 position.need_mark = 0
-
 
         if mark != None:
             position.mark = mark
