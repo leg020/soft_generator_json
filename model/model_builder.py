@@ -166,12 +166,19 @@ class ModelBuilder:
         if mark != None:
             position.mark = mark
         else:
-            position.mark = self.form['mark']
+            position.mark = self.check_mark(self.form['mark'])
 
         if document_id != None:
             position.document_id = int(document_id)
         else:
             position.document_id = int(self.form['document_id'])
         return position
+
+
+    def check_mark(self, mark):
+        if mark == '':
+            mark = None
+        return mark
+
 
 
