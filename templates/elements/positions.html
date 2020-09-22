@@ -14,48 +14,53 @@
 
                 <h5 class="card-title">Создать новую позицию в документе</h5>
 
-                <div class="form-row">
+                <form id="new_position" class="form_to_server" method="post" target="area">
 
-                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="new_place_in_list">Номер в справочнике</span>
+                    <div class="form-row">
+
+                        <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="new_place_in_list">Номер в справочнике</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Введите" aria-label="Номер в справочнике" aria-describedby="addon-wrapping" name="place_in_list" value="">
                         </div>
-                        <input type="text" class="form-control" placeholder="Введите" aria-label="Номер в справочнике" aria-describedby="addon-wrapping" name="new_place_in_list" value="">
-                    </div>
 
-                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="new_count">Количество товара</span>
+                        <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="new_count">Количество товара</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Введите" aria-label="Количество товара" aria-describedby="addon-wrapping" name="count" value="">
                         </div>
-                        <input type="text" class="form-control" placeholder="Введите" aria-label="Количество товара" aria-describedby="addon-wrapping" name="new_count" value="">
-                    </div>
 
-                    <div class="custom-control custom-checkbox my-sm-2 mr-sm-4">
+                        <div class="custom-control custom-checkbox my-sm-2 mr-sm-4">
 
-                        <input type="checkbox" class="custom-control-input" id="new_need_mark_false">
-                        <label class="custom-control-label" for="new_need_mark_false">Добавить марку</label>
+                            <input type="checkbox" class="custom-control-input" name="new_need_mark" id="new_need_mark" value="1">
+                            <label class="custom-control-label" for="new_need_mark">Добавить марку</label>
 
-                    </div>
-                </div>
-
-
-                <div class="form-row">
-                    <div class="input-group flex-nowrap my-sm-2 col-md-12">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="new_mark">Марка</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Введите марку" aria-label="Марка" aria-describedby="addon-wrapping" name="new_mark" value="">
                     </div>
-                </div>
+
+
+                    <div class="form-row">
+                        <div class="input-group flex-nowrap my-sm-2 col-md-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="new_mark">Марка</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Введите марку" aria-label="Марка" aria-describedby="addon-wrapping" name="mark" value="">
+                        </div>
+                    </div>
+
+                </form>
 
 
                 <div class="form-row">
                     <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
 
-                        <button type="button" class="btn btn-outline-primary"> Создать позицию </button>
+                        <button type="submit" name="document_operation" value="add_position" form="new_position" class="btn btn-outline-primary"> Создать позицию </button>
 
                     </div>
                 </div>
+
 
             </div>
         </div>
@@ -78,51 +83,56 @@
 
                 <h5 class="card-title">Изменить позицию в документе</h5>
 
-                <div class="form-row">
+                <form id="edit_position" class="form_to_server" method="post" target="area">
 
-                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="place_in_list">Номер в справочнике</span>
+                    <input type="hidden" name="position_id" value="{{ i.position_id }}">
+
+                    <div class="form-row">
+
+                        <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="place_in_list">Номер в справочнике</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" aria-label="Номер в справочнике" aria-describedby="addon-wrapping" name="place_in_list" value="{{ i.place_in_list }}">
                         </div>
-                        <input type="text" class="form-control" placeholder="" aria-label="Номер в справочнике" aria-describedby="addon-wrapping" name="place_in_list" value="{{ i.place_in_list }}">
-                    </div>
 
-                    <div class="input-group flex-nowrap my-sm-2 col-md-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="count">Количество товара</span>
+                        <div class="input-group flex-nowrap my-sm-2 col-md-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="count">Количество товара</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" aria-label="Количество товара" aria-describedby="addon-wrapping" name="count" value="{{ i.count }}">
                         </div>
-                        <input type="text" class="form-control" placeholder="" aria-label="Количество товара" aria-describedby="addon-wrapping" name="count" value="{{ i.count }}">
-                    </div>
 
-                    <div class="custom-control custom-checkbox my-sm-2 mr-sm-4">
+                        <div class="custom-control custom-checkbox my-sm-2 mr-sm-4">
 
-                        {% if i.need_mark == 1 %}
-                        <input checked type="checkbox" class="custom-control-input" id="need_mark_true">
-                        <label class="custom-control-label" for="need_mark_true">Добавить марку</label>
-                        {% else %}
-                        <input type="checkbox" class="custom-control-input" id="need_mark_false">
-                        <label class="custom-control-label" for="need_mark_false">Добавить марку</label>
-                        {% endif %}
+                            {% if i.need_mark == 1 %}
+                            <input checked type="checkbox" class="custom-control-input" id="need_mark" value="1">
+                            <label class="custom-control-label" for="need_mark">Добавить марку</label>
+                            {% else %}
+                            <input type="checkbox" class="custom-control-input" id="need_mark" value="1">
+                            <label class="custom-control-label" for="need_mark">Добавить марку</label>
+                            {% endif %}
 
-                    </div>
-                </div>
-
-
-                <div class="form-row">
-                    <div class="input-group flex-nowrap my-sm-2 col-md-12">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="mark">Марка</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Введите марку" aria-label="Марка" aria-describedby="addon-wrapping" name="mark" value="{{ i.mark }}">
                     </div>
-                </div>
 
+
+                    <div class="form-row">
+                        <div class="input-group flex-nowrap my-sm-2 col-md-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="mark">Марка</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Введите марку" aria-label="Марка" aria-describedby="addon-wrapping" name="mark" value="{{ i.mark }}">
+                        </div>
+                    </div>
+
+                </form>
 
                 <div class="form-row">
                     <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
 
-                        <button type="button" class="btn btn-outline-primary"> Обновить позицию </button>
-                        <button type="button" class="btn btn-outline-primary"> Удалить позицию </button>
+                        <button type="submit" name="document_operation" value="edit_position" form="edit_position" class="btn btn-outline-primary"> Обновить позицию </button>
+                        <button type="submit" name="document_operation" value="delete_position" form="edit_position" class="btn btn-outline-primary"> Удалить позицию </button>
 
                     </div>
                 </div>

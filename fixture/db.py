@@ -15,6 +15,7 @@ class DataBase:
                                           password=password,
                                           autocommit=True)
 
+
     def get_data_from_db(self, text: str):
         cursor = self.connection.cursor()
         try:
@@ -96,8 +97,6 @@ class DataBase:
                                         need_mark=need_mark,
                                         mark=mark,
                                         document_id=document_id))
-        else:
-            answer.append(Positions(mark=check_result))
         return answer
 
     def get_logs_by_test_id(self, test_id):
@@ -130,6 +129,12 @@ class DataBase:
                                                                                                                                                                                              documents.sale,
                                                                                                                                                                                              documents.test_id))
         return self.get_documents()[-1].document_id
+
+    def insert_in_to_poositions(self, position: Positions()):
+        self.get_data_from_db("insert into positions(place_in_list, count, need_mark, mark, document_id) VALUES(%d, %d, %d, '%s', %d)" % (position.place_in_list, position.count, position.need_mark, position.mark, position.document_id))
+        return self.get_positions_by_document_id(position.document_id)[-1].position_id
+
+
 
     def update_settins_by_id(self, settings: Settings()):
         self.get_data_from_db("UPDATE settings SET target='%s', scaner_port='%s', scaner_boundrate=%d where setting_id=%d" % (settings.target, settings.scaner_port, settings.scaner_boundrate, settings.setting_id))

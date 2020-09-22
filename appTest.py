@@ -46,17 +46,17 @@ def new_test_page(test_id=None, document_id=None):
 
     if document_id != None:
         doc = db.get_documents(document_id=document_id)
+        positions = db.get_positions_by_document_id(document_id=document_id)
         if len(doc) == 0:
             doc = {}
         else:
             doc = doc[0]
+
+        if len(positions) == 0:
+            positions = []
     else:
         doc = {}
-
-    positions = [
-        Positions(position_id=1, place_in_list=2, count=2, need_mark=1, mark='ttttttttt', document_id=1),
-        Positions(position_id=2, place_in_list=5, count=60, need_mark=0, mark='rrrrrrrrr', document_id=1),
-    ]
+        positions = []
 
     return render_template('new_test.html', test_info=test_info, test_settings=test_settings, documents=documents, doc=doc, positions=positions)
 
@@ -106,11 +106,20 @@ def post_edit_page(document_id):
         document_id = db.insert_in_to_documents(documents=document)
 
     if request.form['document_operation'] == 'edit':
-        document_id = document_id
         document = model_builder.convert_in_documents(document_id=document_id)
         document_id = db.update_documents_by_id(document=document)
 
     if request.form['document_operation'] == 'delete':
+        pass
+
+    if request.form['document_operation'] == 'add_position':
+        position = model_builder.convert_in_positions(document_id=document_id)
+        position_id = db.insert_in_to_poositions(position=position)
+
+    if request.form['document_operation'] == 'edit_position':
+        pass
+
+    if request.form['document_operation'] == 'delete_position':
         pass
 
     return redirect(url_for('get_edit_page', document_id=document_id))

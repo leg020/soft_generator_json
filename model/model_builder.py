@@ -1,4 +1,4 @@
-from model.db_answer import Settings, Tasks, Documents
+from model.db_answer import Settings, Tasks, Documents, Positions
 
 
 class ModelBuilder:
@@ -123,5 +123,57 @@ class ModelBuilder:
             document.test_id = int(self.form['test_id'])
 
         return document
+
+    def convert_in_positions(self,
+                             position_id=None,
+                             place_in_list=None,
+                             count=None,
+                             need_mark=None,
+                             mark=None,
+                             document_id=None):
+        position = Positions()
+        if position_id != None:
+            position.position_id = position_id
+        else:
+            try:
+                position.position_id = int(self.form['position_id'])
+            except:
+                position.position_id = None
+
+        if place_in_list != None:
+            position.place_in_list = place_in_list
+        else:
+            position.place_in_list = int(self.form['place_in_list'])
+
+        if count != None:
+            position.count = count
+        else:
+            position.count = int(self.form['count'])
+
+
+        if need_mark != None:
+            position.need_mark = need_mark
+        elif self.form['document_operation'] == 'add_position':
+            try:
+                position.need_mark = int(self.form['new_need_mark'])
+            except:
+                position.need_mark = 0
+        elif self.form['document_operation'] == 'edit_position':
+            try:
+                position.need_mark = int(self.form['need_mark'])
+            except:
+                position.need_mark = 0
+
+
+        if mark != None:
+            position.mark = mark
+        else:
+            position.mark = self.form['mark']
+
+        if document_id != None:
+            position.document_id = int(document_id)
+        else:
+            position.document_id = int(self.form['document_id'])
+        return position
 
 
