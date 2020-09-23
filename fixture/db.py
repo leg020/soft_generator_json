@@ -179,6 +179,14 @@ class DataBase:
         self.get_data_from_db("DELETE FROM documents WHERE document_id=%d" % document_id)
         return self.get_documents(document_id=document_id)
 
-    def delete_test(self, test_id):
+    def delete_test_by_id(self, test_id):
         documents = self.get_documents(test_id=test_id)
-        pass
+        tests = self.get_tests(id=test_id)
+        for i in documents:
+            self.get_data_from_db("DELETE FROM positions WHERE document_id=%d" % i.document_id)
+        for i in documents:
+            self.get_data_from_db("DELETE FROM documents WHERE document_id=%d" % i.document_id)
+        self.get_data_from_db("DELETE FROM tasks WHERE task_id=%d" % test_id)
+        for i in tests:
+            self.get_data_from_db("DELETE FROM settings WHERE setting_id=%d" % i.setting_id)
+        return self.get_tests(id=test_id)

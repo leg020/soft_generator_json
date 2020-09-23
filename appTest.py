@@ -21,12 +21,13 @@ def get_main_page():
 
 @flask.route('/', methods=["POST"])
 def post_main_page():
+    db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
     if request.form['operation'] == 'start':
         a = request.form['data']
     elif request.form['operation'] == 'get_log':
         a = request.form['data']
     elif request.form['operation'] == 'delete':
-        a = request.form['data']
+        answer = db.delete_test_by_id(int(request.form['data']))
     elif request.form['operation'] == 'edit':
         session['test_id'] = request.form['data']
         return redirect(url_for('get_edit_page', document_id='new'))
@@ -126,7 +127,6 @@ def post_edit_page(document_id):
         answer = db.delete_position_by_id(position_id=position_id)
 
     return redirect(url_for('get_edit_page', document_id=document_id))
-
 
 
 
