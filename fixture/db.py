@@ -84,9 +84,14 @@ class DataBase:
                                         test_id=test_id))
         return answer
 
-    def get_positions_by_document_id(self, document_id):
+    def get_positions(self, document_id=None, position_id=None):
         answer = []
-        data = self.get_data_from_db('select position_id, place_in_list, count, need_mark, mark, document_id from positions where document_id=%s' % document_id)
+        if document_id != None:
+            data = self.get_data_from_db('select position_id, place_in_list, count, need_mark, mark, document_id from positions where document_id=%s' % document_id)
+        elif position_id != None:
+            data = self.get_data_from_db('select position_id, place_in_list, count, need_mark, mark, document_id from positions where position_id=%s' % position_id)
+        else:
+            data = self.get_data_from_db('select position_id, place_in_list, count, need_mark, mark, document_id from positions')
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
@@ -132,7 +137,7 @@ class DataBase:
 
     def insert_in_to_poositions(self, position: Positions()):
         self.get_data_from_db("insert into positions(place_in_list, count, need_mark, mark, document_id) VALUES(%d, %d, %d, '%s', %d)" % (position.place_in_list, position.count, position.need_mark, position.mark, position.document_id))
-        return self.get_positions_by_document_id(position.document_id)[-1].position_id
+        return self.get_positions(document_id=position.document_id)[-1].position_id
 
 
 
@@ -156,10 +161,24 @@ class DataBase:
         return document.document_id
 
     def update_position_by_id(self, position: Positions()):
-        self.get_data_from_db("UPDATE position SET place_in_list=%d, count=%d, need_mark=%d, mark=%s, document_id=%d where position_id=%d" % (position.place_in_list,
+        position = position
+        self.get_data_from_db("UPDATE positions SET place_in_list=%d, count=%d, need_mark=%d, mark='%s', document_id=%d where position_id=%d" % (position.place_in_list,
                                                                                                                                               position.count,
                                                                                                                                               position.need_mark,
                                                                                                                                               position.mark,
                                                                                                                                               position.document_id,
                                                                                                                                               position.position_id))
         return position.position_id
+
+    def delete_position_by_id(self, position_id):
+        self.get_data_from_db("DELETE FROM positions WHERE position_id=%d" % position_id)
+        return self.get_positions(position_id=position_id)
+
+    def delete_document_by_id(self, document_id):
+        self.get_data_from_db("DELETE FROM positions WHERE document_id=%d" % document_id)
+        self.get_data_from_db("DELETE FROM documents WHERE document_id=%d" % document_id)
+        return self.get_documents(document_id=document_id)
+
+    def delete_test(self, test_id):
+        documents = self.get_documents(test_id=test_id)
+        pass

@@ -46,7 +46,7 @@ def new_test_page(test_id=None, document_id=None):
 
     if document_id != None:
         doc = db.get_documents(document_id=document_id)
-        positions = db.get_positions_by_document_id(document_id=document_id)
+        positions = db.get_positions(document_id=document_id)
         if len(doc) == 0:
             doc = {}
         else:
@@ -110,17 +110,20 @@ def post_edit_page(document_id):
         document_id = db.update_documents_by_id(document=document)
 
     if request.form['document_operation'] == 'delete':
-        pass
+        document = model_builder.convert_in_documents(document_id=document_id)
+        answer = db.delete_document_by_id(document_id=document.document_id)
 
     if request.form['document_operation'] == 'add_position':
         position = model_builder.convert_in_positions(document_id=document_id)
         position_id = db.insert_in_to_poositions(position=position)
 
     if request.form['document_operation'] == 'edit_position':
-        pass
+        position = model_builder.convert_in_positions(document_id=document_id)
+        position_id = db.update_position_by_id(position=position)
 
     if request.form['document_operation'] == 'delete_position':
-        pass
+        position_id = model_builder.convert_in_positions(document_id=document_id).position_id
+        answer = db.delete_position_by_id(position_id=position_id)
 
     return redirect(url_for('get_edit_page', document_id=document_id))
 

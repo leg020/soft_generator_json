@@ -83,7 +83,7 @@
 
                 <h5 class="card-title">Изменить позицию в документе</h5>
 
-                <form id="edit_position" class="form_to_server" method="post" target="area">
+                <form id="edit_position_{{ i.position_id }}" class="form_to_server" method="post" target="area">
 
                     <input type="hidden" name="position_id" value="{{ i.position_id }}">
 
@@ -131,8 +131,8 @@
                 <div class="form-row">
                     <div class="btn-group my-sm-2 col-md-6" role="group" aria-label="Basic example">
 
-                        <button type="submit" name="document_operation" value="edit_position" form="edit_position" class="btn btn-outline-primary"> Обновить позицию </button>
-                        <button type="submit" name="document_operation" value="delete_position" form="edit_position" class="btn btn-outline-primary"> Удалить позицию </button>
+                        <button type="submit" name="document_operation" value="edit_position" form="edit_position_{{ i.position_id }}" class="btn btn-outline-primary"> Обновить позицию </button>
+                        <button type="submit" name="document_operation" value="delete_position" form="edit_position_{{ i.position_id }}" class="btn btn-outline-primary"> Удалить позицию </button>
 
                     </div>
                 </div>
