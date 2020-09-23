@@ -106,14 +106,12 @@ class DataBase:
 
     def get_logs_by_test_id(self, test_id):
         answer = []
-        data = self.get_data_from_db('select log_id, data, test_id, date_time from logs where task_id=%s' % test_id)
+        data = self.get_data_from_db('select log_id, data, test_id, date_time from logs where test_id=%s' % test_id)
         check_result = self.check_data(data)
         if check_result == 0:
             for row in data:
                 (log_id, data, test_id, date_time) = row
                 answer.append(Logs(log_id=log_id, data=data, test_id=test_id, date_time=date_time))
-        else:
-            answer.append(Documents(document_type=check_result))
         return answer
 
     def insert_in_to_settings(self, settings: Settings()):
@@ -139,6 +137,9 @@ class DataBase:
         self.get_data_from_db("insert into positions(place_in_list, count, need_mark, mark, document_id) VALUES(%d, %d, %d, '%s', %d)" % (position.place_in_list, position.count, position.need_mark, position.mark, position.document_id))
         return self.get_positions(document_id=position.document_id)[-1].position_id
 
+    def insert_in_to_logs(self, data, test_id):
+        self.get_data_from_db("insert into logs(data, test_id) VALUES('%s', %d)" % (data, test_id))
+        return self.get_logs_by_test_id(test_id=test_id)
 
 
     def update_settins_by_id(self, settings: Settings()):
@@ -161,7 +162,6 @@ class DataBase:
         return document.document_id
 
     def update_position_by_id(self, position: Positions()):
-        position = position
         self.get_data_from_db("UPDATE positions SET place_in_list=%d, count=%d, need_mark=%d, mark='%s', document_id=%d where position_id=%d" % (position.place_in_list,
                                                                                                                                               position.count,
                                                                                                                                               position.need_mark,
@@ -169,6 +169,10 @@ class DataBase:
                                                                                                                                               position.document_id,
                                                                                                                                               position.position_id))
         return position.position_id
+
+    def update_log_by_test_id(self, data, test_id):
+        self.get_data_from_db("UPDATE logs SET data='%s' where test_id=%d" % (data, test_id))
+        return self.get_logs_by_test_id(test_id=test_id)
 
     def delete_position_by_id(self, position_id):
         self.get_data_from_db("DELETE FROM positions WHERE position_id=%d" % position_id)

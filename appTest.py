@@ -1,21 +1,27 @@
 from flask import Flask, render_template, redirect, url_for, request, session
 import os
+import requests
 from fixture.db import DataBase
-from model.db_answer import Tasks, Settings, Documents, Positions
 from model.model_builder import ModelBuilder
 
 
 flask = Flask(__name__)
 flask.secret_key = os.urandom(24)
-result = None
+
 
 
 
 @flask.route('/', methods=["GET"])
 def get_main_page():
-    session['test_id'] = 'new'
     db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
+    try:
+        test_id = int(session['test_id'])
+        result = db.get_logs_by_test_id(test_id=test_id)[-1].data
+    except:
+        session['test_id'] = 'new'
+        result = None
     tests = db.get_tests()
+
     return render_template('main.html', data=tests, result=result)
 
 
@@ -25,7 +31,12 @@ def post_main_page():
     if request.form['operation'] == 'start':
         a = request.form['data']
     elif request.form['operation'] == 'get_log':
-        a = request.form['data']
+        session['test_id'] = int(request.form['data'])
+        data = requests.get('http://localhost:8000/get_log').text
+        if db.get_logs_by_test_id(test_id=session['test_id']) == []:
+            answer = db.insert_in_to_logs(data=data, test_id=session['test_id'])
+        else:
+            answer = db.update_log_by_test_id(data=data, test_id=session['test_id'])
     elif request.form['operation'] == 'delete':
         answer = db.delete_test_by_id(int(request.form['data']))
     elif request.form['operation'] == 'edit':
