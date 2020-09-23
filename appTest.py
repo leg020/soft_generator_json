@@ -128,8 +128,5 @@ def post_edit_page(document_id):
 
 
 
-
-
-
 if __name__ == '__main__':
     flask.run(host="127.0.0.1", port="7000", debug=True, threaded=True, use_reloader=False)

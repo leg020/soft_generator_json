@@ -155,3 +155,11 @@ class DataBase:
                                                                                                                                                                                          document.document_id))
         return document.document_id
 
+    def update_position_by_id(self, position: Positions()):
+        self.get_data_from_db("UPDATE position SET place_in_list=%d, count=%d, need_mark=%d, mark=%s, document_id=%d where position_id=%d" % (position.place_in_list,
+                                                                                                                                              position.count,
+                                                                                                                                              position.need_mark,
+                                                                                                                                              position.mark,
+                                                                                                                                              position.document_id,
+                                                                                                                                              position.position_id))
+        return position.position_id
