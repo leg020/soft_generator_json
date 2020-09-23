@@ -1,6 +1,6 @@
 
 
-class Position:
+class PositionsInCheck:
 
     def __init__(self, place_in_list=None, cout=None, need_mark=False, mark=None):
         self.place_in_list = place_in_list
@@ -9,7 +9,7 @@ class Position:
         self.mark = mark
 
 
-class Document:
+class Checks:
 
     def __init__(self, check_number=None,
                  document_type=None,

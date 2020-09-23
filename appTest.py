@@ -3,6 +3,7 @@ import os
 import requests
 from fixture.db import DataBase
 from model.model_builder import ModelBuilder
+from generator_json.json_data import JsonData
 
 
 flask = Flask(__name__)
@@ -28,8 +29,22 @@ def get_main_page():
 @flask.route('/', methods=["POST"])
 def post_main_page():
     db = DataBase(host='127.0.0.1', name='tests', user='root', password='')
+
     if request.form['operation'] == 'start':
-        a = request.form['data']
+        session['test_id'] = int(request.form['data'])
+        json_data = JsonData()
+        setting_id = db.get_tests(id=session['test_id'])[0].setting_id
+        setting = db.get_settings(id=setting_id)[0]
+        json_data.add_settings(setting)
+        documents = db.get_documents(test_id=session['test_id'])
+        for i in documents:
+            positions = db.get_positions(document_id=i.document_id)
+            json_data.add_positions(positions=positions)
+            json_data.add_document(document=i)
+        data_from_db = json_data.create_json()
+        res = requests.post('http://localhost:8000/add_task', json=data_from_db)
+
+
     elif request.form['operation'] == 'get_log':
         session['test_id'] = int(request.form['data'])
         data = requests.get('http://localhost:8000/get_log').text
@@ -39,9 +54,11 @@ def post_main_page():
             answer = db.update_log_by_test_id(data=data, test_id=session['test_id'])
     elif request.form['operation'] == 'delete':
         answer = db.delete_test_by_id(int(request.form['data']))
+
     elif request.form['operation'] == 'edit':
         session['test_id'] = request.form['data']
         return redirect(url_for('get_edit_page', document_id='new'))
+
     return redirect(url_for('get_main_page'))
 
 
