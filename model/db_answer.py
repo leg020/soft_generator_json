@@ -11,7 +11,7 @@ class Tasks:
         self.port_recipient = port_recipient
 
 
-class Settings:
+class Settings_db:
 
     def __init__(self, setting_id=None,
                  target=None,

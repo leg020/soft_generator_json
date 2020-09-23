@@ -53,11 +53,11 @@ class DataBase:
         if check_result == 0:
             for row in data:
                 (setting_id, target, scaner_port, scaner_boundrate, have_cassa) = row
-                answer.append(Settings(setting_id=setting_id,
-                                       target=target,
-                                       scaner_port=scaner_port,
-                                       scaner_boundrate=scaner_boundrate,
-                                       have_cassa=have_cassa))
+                answer.append(Settings_db(setting_id=setting_id,
+                                          target=target,
+                                          scaner_port=scaner_port,
+                                          scaner_boundrate=scaner_boundrate,
+                                          have_cassa=have_cassa))
         return answer
 
 
@@ -114,7 +114,7 @@ class DataBase:
                 answer.append(Logs(log_id=log_id, data=data, test_id=test_id, date_time=date_time))
         return answer
 
-    def insert_in_to_settings(self, settings: Settings()):
+    def insert_in_to_settings(self, settings: Settings_db()):
         self.get_data_from_db("insert into settings(target, scaner_port, scaner_boundrate) VALUES('%s', '%s', %d)" % (settings.target, settings.scaner_port, settings.scaner_boundrate))
         return self.get_settings()[-1].setting_id
 
@@ -142,7 +142,7 @@ class DataBase:
         return self.get_logs_by_test_id(test_id=test_id)
 
 
-    def update_settins_by_id(self, settings: Settings()):
+    def update_settins_by_id(self, settings: Settings_db()):
         self.get_data_from_db("UPDATE settings SET target='%s', scaner_port='%s', scaner_boundrate=%d where setting_id=%d" % (settings.target, settings.scaner_port, settings.scaner_boundrate, settings.setting_id))
         return settings.setting_id
 

@@ -1,4 +1,4 @@
-from model.db_answer import Settings, Tasks, Documents, Positions
+from model.db_answer import Settings_db, Tasks, Documents, Positions
 
 
 class ModelBuilder:
@@ -45,7 +45,7 @@ class ModelBuilder:
                             target=None,
                             scaner_port=None,
                             scaner_boundrate=None):
-        settings = Settings()
+        settings = Settings_db()
         if setting_id != None:
             settings.setting_id = setting_id
         elif self.form['setting_id'] != None and self.form['setting_id'] != 'None' and self.form['setting_id'] != '':
