@@ -15,8 +15,8 @@ class JsonData:
         for i in positions:
             self.positions.append(PositionsInCheck(place_in_list=i.place_in_list,
                                                    cout=i.count,
-                                                   need_mark=i.need_mark,
-                                                   mark=bool(i.mark)))
+                                                   need_mark=bool(i.need_mark),
+                                                   mark=self.convert_none(i.mark)))
 
     def add_document(self, document: Documents):
         doc = Checks(check_number=document.check_number,
@@ -41,3 +41,8 @@ class JsonData:
         jsonpickle.set_encoder_options('json', indent=2)
         self.documents = []
         return json.loads(jsonpickle.encode(data))
+
+    def convert_none(self, data):
+        if data == "None":
+            data = None
+        return data
