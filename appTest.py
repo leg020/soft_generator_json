@@ -42,12 +42,14 @@ def post_main_page():
             json_data.add_positions(positions=positions)
             json_data.add_document(document=i)
         data_from_db = json_data.create_json()
-        res = requests.post('http://localhost:8000/add_task', json=data_from_db)
+        host = db.get_tests(session['test_id'])[0]
+        res = requests.post('http://' + host.ip_recipient + ':' + str(host.port_recipient) + '/add_task', json=data_from_db)
 
 
     elif request.form['operation'] == 'get_log':
         session['test_id'] = int(request.form['data'])
-        data = requests.get('http://localhost:8000/get_log').text
+        host = db.get_tests(session['test_id'])[0]
+        data = requests.get('http://' + host.ip_recipient + ':' + str(host.port_recipient) + '/get_log').text
         if db.get_logs_by_test_id(test_id=session['test_id']) == []:
             answer = db.insert_in_to_logs(data=data, test_id=session['test_id'])
         else:

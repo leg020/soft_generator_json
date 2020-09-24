@@ -16,7 +16,7 @@ class JsonData:
             self.positions.append(PositionsInCheck(place_in_list=i.place_in_list,
                                                    cout=i.count,
                                                    need_mark=i.need_mark,
-                                                   mark=i.mark))
+                                                   mark=bool(i.mark)))
 
     def add_document(self, document: Documents):
         doc = Checks(check_number=document.check_number,
@@ -25,7 +25,7 @@ class JsonData:
                      check_type=document.check_type,
                      help_setting=document.help_setting,
                      type_close=document.type_close,
-                     sale=document.sale,
+                     sale=bool(document.sale),
                      positions=self.positions)
         self.documents.append(doc)
         self.positions = []
